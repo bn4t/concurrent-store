@@ -7,26 +7,26 @@ import (
 
 var ErrStoreEmpty = errors.New("store is empty")
 
-// ConcurrentStore is a concurrency-safe deduplicated store
-type ConcurrentStore struct {
+// Store is a concurrency-safe deduplicated store
+type Store struct {
 	lock  *sync.RWMutex
 	items map[interface{}]struct{}
 }
 
-func NewConcurrentStore() *ConcurrentStore {
-	return &ConcurrentStore{
+func NewConcurrentStore() *Store {
+	return &Store{
 		lock:  &sync.RWMutex{},
 		items: map[interface{}]struct{}{},
 	}
 }
 
-func (l *ConcurrentStore) Add(v interface{}) {
+func (l *Store) Add(v interface{}) {
 	l.lock.Lock()
 	l.items[v] = struct{}{}
 	l.lock.Unlock()
 }
 
-func (l *ConcurrentStore) Contains(v interface{}) bool {
+func (l *Store) Contains(v interface{}) bool {
 	l.lock.RLock()
 	_, ok := l.items[v]
 	l.lock.RUnlock()
@@ -34,7 +34,7 @@ func (l *ConcurrentStore) Contains(v interface{}) bool {
 	return ok
 }
 
-func (l *ConcurrentStore) Pop() (interface{}, error) {
+func (l *Store) Pop() (interface{}, error) {
 	l.lock.Lock()
 	defer l.lock.Unlock()
 	if len(l.items) == 0 {
@@ -50,7 +50,7 @@ func (l *ConcurrentStore) Pop() (interface{}, error) {
 	return nil, nil
 }
 
-func (l *ConcurrentStore) All() map[interface{}]struct{} {
+func (l *Store) All() map[interface{}]struct{} {
 	l.lock.RLock()
 	defer l.lock.RUnlock()
 	return l.items
