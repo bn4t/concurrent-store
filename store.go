@@ -1,4 +1,4 @@
-package go_concurrent_store
+package concurrent_store
 
 import (
 	"errors"

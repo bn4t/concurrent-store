@@ -1,4 +1,4 @@
-package go_concurrent_store
+package concurrent_store
 
 import (
 	"math/rand"
@@ -65,7 +65,6 @@ func TestConcurrentStore_All(t *testing.T) {
 	}
 }
 
-
 func BenchmarkConcurrentStore_Contains(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
@@ -83,7 +82,6 @@ func BenchmarkConcurrentStore_Contains(b *testing.B) {
 	}
 }
 
-
 func BenchmarkConcurrentStore_Add(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
@@ -94,7 +92,6 @@ func BenchmarkConcurrentStore_Add(b *testing.B) {
 		s.Add(u)
 	}
 }
-
 
 func BenchmarkConcurrentStore_Pop(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
@@ -126,8 +123,8 @@ func BenchmarkConcurrentStore_All(b *testing.B) {
 	}
 }
 
-
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
 func randStringRunes(n int) string {
 	b := make([]rune, n)
 	for i := range b {
