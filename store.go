@@ -13,7 +13,7 @@ type Store struct {
 	items map[interface{}]struct{}
 }
 
-func NewConcurrentStore() *Store {
+func NewStore() *Store {
 	return &Store{
 		lock:  &sync.RWMutex{},
 		items: map[interface{}]struct{}{},

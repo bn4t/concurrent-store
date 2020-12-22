@@ -8,7 +8,7 @@ import (
 )
 
 func TestConcurrentStore_Add(t *testing.T) {
-	s := NewConcurrentStore()
+	s := NewStore()
 	v := "foo"
 	s.Add(v)
 	if !s.Contains(v) {
@@ -17,7 +17,7 @@ func TestConcurrentStore_Add(t *testing.T) {
 }
 
 func TestConcurrentStore_Contains(t *testing.T) {
-	s := NewConcurrentStore()
+	s := NewStore()
 	a := "foo"
 	b := "bar"
 
@@ -32,7 +32,7 @@ func TestConcurrentStore_Contains(t *testing.T) {
 }
 
 func TestConcurrentStore_Pop(t *testing.T) {
-	s := NewConcurrentStore()
+	s := NewStore()
 	v := "foo"
 	s.Add(v)
 	p, err := s.Pop()
@@ -49,7 +49,7 @@ func TestConcurrentStore_Pop(t *testing.T) {
 }
 
 func TestConcurrentStore_All(t *testing.T) {
-	s := NewConcurrentStore()
+	s := NewStore()
 	a := "foo"
 	b := "bar"
 
@@ -68,7 +68,7 @@ func TestConcurrentStore_All(t *testing.T) {
 func BenchmarkConcurrentStore_Contains(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
-	s := NewConcurrentStore()
+	s := NewStore()
 	for i := 0; i < 1000; i++ {
 		u, _ := url.Parse("https://" + randStringRunes(4) + ".com")
 		s.Add(u)
@@ -86,7 +86,7 @@ func BenchmarkConcurrentStore_Add(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
 	u, _ := url.Parse("https://" + randStringRunes(8) + ".com")
-	s := NewConcurrentStore()
+	s := NewStore()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		s.Add(u)
@@ -96,7 +96,7 @@ func BenchmarkConcurrentStore_Add(b *testing.B) {
 func BenchmarkConcurrentStore_Pop(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
-	s := NewConcurrentStore()
+	s := NewStore()
 	for i := 0; i < 1000; i++ {
 		u, _ := url.Parse("https://" + randStringRunes(8) + ".com")
 		s.Add(u)
@@ -111,7 +111,7 @@ func BenchmarkConcurrentStore_Pop(b *testing.B) {
 func BenchmarkConcurrentStore_All(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
-	s := NewConcurrentStore()
+	s := NewStore()
 	for i := 0; i < 1000; i++ {
 		u, _ := url.Parse("https://" + randStringRunes(8) + ".com")
 		s.Add(u)
