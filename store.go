@@ -1,11 +1,8 @@
 package concurrent_store
 
 import (
-	"errors"
 	"sync"
 )
-
-var ErrStoreEmpty = errors.New("store is empty")
 
 // Store is a concurrency-safe deduplicated store
 type Store struct {
