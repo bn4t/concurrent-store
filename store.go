@@ -50,5 +50,11 @@ func (l *Store) Pop() (interface{}, error) {
 func (l *Store) All() map[interface{}]struct{} {
 	l.lock.RLock()
 	defer l.lock.RUnlock()
-	return l.items
+
+	// clone the map
+	ret := map[interface{}]struct{}{}
+	for k, v := range l.items {
+		ret[k] = v
+	}
+	return ret
 }

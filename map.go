@@ -50,5 +50,11 @@ func (l *Map) Pop() (interface{}, interface{}, error) {
 func (l *Map) All() map[interface{}]interface{} {
 	l.lock.RLock()
 	defer l.lock.RUnlock()
-	return l.items
+
+	// clone the map
+	ret := map[interface{}]interface{}{}
+	for k, v := range l.items {
+		ret[k] = v
+	}
+	return ret
 }
