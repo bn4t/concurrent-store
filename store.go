@@ -19,14 +19,16 @@ func NewStore() *Store {
 
 func (l *Store) Add(v interface{}) {
 	l.lock.Lock()
+	defer l.lock.Unlock()
+
 	l.items[v] = struct{}{}
-	l.lock.Unlock()
 }
 
 func (l *Store) Contains(v interface{}) bool {
 	l.lock.RLock()
+	defer l.lock.RUnlock()
+
 	_, ok := l.items[v]
-	l.lock.RUnlock()
 
 	return ok
 }
