@@ -34,17 +34,13 @@ func (l *Store) Contains(v interface{}) bool {
 func (l *Store) Pop() (interface{}, error) {
 	l.lock.Lock()
 	defer l.lock.Unlock()
-	if len(l.items) == 0 {
-		return nil, ErrStoreEmpty
-	}
 
 	for k := range l.items {
 		delete(l.items, k)
 		return k, nil
 	}
 
-	panic("reached unreachable state in concurrent store")
-	return nil, nil
+	return nil, ErrStoreEmpty
 }
 
 func (l *Store) All() map[interface{}]struct{} {
