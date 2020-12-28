@@ -34,17 +34,13 @@ func (l *Map) Contains(k interface{}) bool {
 func (l *Map) Pop() (interface{}, interface{}, error) {
 	l.lock.Lock()
 	defer l.lock.Unlock()
-	if len(l.items) == 0 {
-		return nil, nil, ErrStoreEmpty
-	}
 
 	for k, v := range l.items {
 		delete(l.items, k)
 		return k, v, nil
 	}
 
-	panic("reached unreachable state in concurrent map")
-	return nil, nil, nil
+	return nil, nil, ErrStoreEmpty
 }
 
 func (l *Map) All() map[interface{}]interface{} {
