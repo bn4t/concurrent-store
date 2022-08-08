@@ -23,6 +23,12 @@ func (l *Map) Add(k interface{}, v interface{}) {
 	l.lock.Unlock()
 }
 
+func (l *Map) Delete(k interface{}) {
+	l.lock.Lock()
+	delete(l.items, k)
+	l.lock.Unlock()
+}
+
 func (l *Map) Contains(k interface{}) bool {
 	l.lock.RLock()
 	_, ok := l.items[k]
